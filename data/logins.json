@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Vienna",
+    "latitude": 48.2092,
+    "longitude": 16.3728,
+    "userCount": 523
+  },
+  {
+    "title": "Minsk",
+    "latitude": 53.9678,
+    "longitude": 27.5766,
+    "userCount": 152
+  },
+  {
+    "title": "Brussels",
+    "latitude": 50.8371,
+    "longitude": 4.3676,
+    "userCount": 425
+  },
+  {
+    "title": "Sarajevo",
+    "latitude": 43.8608,
+    "longitude": 18.4214,
+    "userCount": 312
+  },
+  {
+    "title": "Sofia",
+    "latitude": 42.7105,
+    "longitude": 23.3238,
+    "userCount": 298
+  },
+  {
+    "title": "Zagreb",
+    "latitude": 45.815,
+    "longitude": 15.9785,
+    "userCount": 187
+  },
+  {
+    "title": "Washington D.C.",
+    "latitude": 38.8921,
+    "longitude": -77.0241,
+    "userCount": 634
+  },
+  {
+    "title": "New York",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "userCount": 845
+  },
+  {
+    "title": "Los Angeles",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "userCount": 412
+  },
+  {
+    "title": "Chicago",
+    "latitude": 41.8781,
+    "longitude": -87.6298,
+    "userCount": 376
+  }
+]
