@@ -3,23 +3,22 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXNoZW51ZCIsImEiOiJjazlsZG83ZDQwM2g0M2dxdTJ5O
 
 const map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/light-v11', // start with light style
+  style: 'mapbox://styles/mapbox/light-v11',
   center: [10, 23.6345],
   zoom: 2,
 });
 
 map.on('load', () => {
-  // Change sea background (like backgroundSeries)
+  // 🌊 Background
   map.setPaintProperty('background', 'background-color', '#6e6fff');
   map.setPaintProperty('background', 'background-opacity', 0.5);
 
-  // Add country boundaries
+  // 🌍 Country boundaries
   map.addSource('countries', {
     type: 'vector',
     url: 'mapbox://mapbox.country-boundaries-v1',
   });
 
-  // Make all land white with gray border (like polygonSeries)
   map.addLayer({
     id: 'land-fills',
     type: 'fill',
@@ -42,27 +41,52 @@ map.on('load', () => {
     },
   });
 
-  // Smooth zoom into Mexico
+  // 🇺🇸 US States/Counties from your local GeoJSON
+  map.addSource('us-states', {
+    type: 'geojson',
+    data: 'data/us-states-gadm41_USA_2.json',
+  });
+
+  // Fill for US subdivisions
+  map.addLayer({
+    id: 'us-fills',
+    type: 'fill',
+    source: 'us-states',
+    paint: {
+      'fill-color': '#fffae6', // light yellow fill
+      'fill-opacity': 0.6,
+    },
+  });
+
+  // Borders for US subdivisions
+  map.addLayer({
+    id: 'us-borders',
+    type: 'line',
+    source: 'us-states',
+    paint: {
+      'line-color': '#cffff0', // orange outline
+      'line-width': 1,
+    },
+  });
+
+  // 🎥 Zoom smoothly into the US
   map.flyTo({
-    center: [-102.5528, 23.6345],
-    zoom: 1.5,
+    center: [-98.5795, 39.8283], // roughly geographic center of US
+    zoom: 3.5,
     speed: 0.6,
   });
 });
 
-// Load JSON data
+// 📊 Load login data
 fetch('data/logins.json')
   .then((res) => res.json())
   .then((cities) => {
-    let total = 0;
-
-    // Sort top list
-    const sorted = [...cities].sort((a, b) => b.userCount - a.userCount);
-
-    // Update sidebar numbers
-    total = cities.reduce((sum, c) => sum + c.userCount, 0);
+    // total users
+    const total = cities.reduce((sum, c) => sum + c.userCount, 0);
     $('#totalUsers').text(total.toLocaleString());
 
+    // top 5
+    const sorted = [...cities].sort((a, b) => b.userCount - a.userCount);
     $('#topList').empty();
     sorted.slice(0, 5).forEach((c) => {
       $('#topList').append(`
@@ -73,12 +97,10 @@ fetch('data/logins.json')
       `);
     });
 
-    // Place markers
-    // Place markers with always-visible data cards
+    // markers
     cities.forEach((city) => {
       const card = document.createElement('div');
       card.className = 'city-card';
-
       card.innerHTML = `
         <div class="popup-card">
           <strong>${city.title}</strong><br>
@@ -86,10 +108,9 @@ fetch('data/logins.json')
         </div>
       `;
 
-      // Position using Marker API
       new mapboxgl.Marker({
         element: card,
-        anchor: 'bottom', // so card points correctly
+        anchor: 'bottom',
       })
         .setLngLat([city.longitude, city.latitude])
         .addTo(map);
