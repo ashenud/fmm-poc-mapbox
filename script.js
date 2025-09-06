@@ -16,7 +16,7 @@ map.on('load', () => {
   // 🌍 Country boundaries
   map.addSource('countries', {
     type: 'vector',
-    url: 'mapbox://mapbox.country-boundaries-v1',
+    url: 'mapbox://mapbox.country-boundaries-v4',
   });
 
   map.addLayer({
@@ -38,34 +38,6 @@ map.on('load', () => {
     paint: {
       'line-color': '#c0c0c0',
       'line-width': 0.5,
-    },
-  });
-
-  // 🇺🇸 US States/Counties from your local GeoJSON
-  map.addSource('us-states', {
-    type: 'geojson',
-    data: 'data/us-states-gadm41_USA_2.json',
-  });
-
-  // Fill for US subdivisions
-  map.addLayer({
-    id: 'us-fills',
-    type: 'fill',
-    source: 'us-states',
-    paint: {
-      'fill-color': '#fffae6', // light yellow fill
-      'fill-opacity': 0.6,
-    },
-  });
-
-  // Borders for US subdivisions
-  map.addLayer({
-    id: 'us-borders',
-    type: 'line',
-    source: 'us-states',
-    paint: {
-      'line-color': '#cffff0', // orange outline
-      'line-width': 1,
     },
   });
 
